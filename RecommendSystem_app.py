@@ -38,7 +38,7 @@ if selected_game:
     matches.reset_index(inplace=True)
 
     # Results
-    cols = ['Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']
+    cols = ['Genre', 'Developer', 'Publisher', 'North America', 'Rest of countries']
     
    # sidebar_bg('pexels-marko-blazevic-2708981.jpg')
     st.markdown("# The recommended games for [{}]({}) are:".format(selected_game, link))
