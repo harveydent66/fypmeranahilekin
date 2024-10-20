@@ -35,6 +35,8 @@ selected_game = ph.selectbox(
     [''] + filtered_games['Title'].to_list(),
     key='default',
     format_func=lambda x: 'Select a game' if x == '' else x
+
+)
 # Recommendations
 if selected_game:
 
