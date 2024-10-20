@@ -20,10 +20,12 @@ st.sidebar.markdown('<strong><span style="color: #8B2500;font-size: 26px;"> Game
 st.sidebar.markdown('An app by [Long Do](https://doophilong.github.io/Portfolio/)')
 st.sidebar.image('pexels-pixabay-275033.jpg', use_column_width=True)
 st.sidebar.markdown('<strong><span style="color: #EE4000;font-size: 26px;">:slot_machine: Choose your game !!!</span></strong>',unsafe_allow_html=True)
+ph = st.sidebar.empty()
 selected_game = ph.selectbox('Select one among the 787 games '
                              'from the menu: (you can type it as well)',
                              [''] + games_df['Title'].to_list(), key='default',
                              format_func=lambda x: 'Select a game' if x == '' else x)
+
 # Recommendations
 if selected_game:
 
