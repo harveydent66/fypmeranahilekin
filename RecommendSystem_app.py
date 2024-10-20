@@ -24,7 +24,6 @@ ph = st.sidebar.empty()
 genres = games_df['Genre'].unique().tolist()
 selected_genre = st.sidebar.selectbox('Filter by Genre', ['All'] + genres)
 
-# Sidebar: Allow multiple genre selection
 genres = games_df['Genre'].unique().tolist()
 selected_genres = st.sidebar.multiselect('Filter by Genre(s)', genres)
 
@@ -49,15 +48,6 @@ filtered_games = filtered_games[
     (filtered_games['Release Year'] >= selected_year_range[0]) &
     (filtered_games['Release Year'] <= selected_year_range[1])
 ]
-
-# Modify the selectbox to show only filtered games
-selected_game = ph.selectbox(
-    'Select a game from the filtered list: (you can type it as well)',
-    [''] + filtered_games['Title'].to_list(),
-    key='default',
-    format_func=lambda x: 'Select a game' if x == '' else x
-)
-
 selected_game = ph.selectbox(
     'Select a game from the filtered list: (you can type it as well)',
     [''] + filtered_games['Title'].to_list(),
