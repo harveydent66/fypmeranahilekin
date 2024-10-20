@@ -55,16 +55,13 @@ selected_game = ph.selectbox(
     format_func=lambda x: 'Select a game' if x == '' else x
 )
 
-# Recommendations
-if selected_game:
+selected_game = ph.selectbox(
+    'Select a game from the filtered list: (you can type it as well)',
+    [''] + filtered_games['Title'].to_list(),
+    key='default',
+    format_func=lambda x: 'Select a game' if x == '' else x
+)
 
-    link = 'https://en.wikipedia.org' + games_df[games_df.Title == selected_game].Link.values[0]
-
-    # DF query
-    matches = similarity_df[selected_game].sort_values()[1:6]
-    matches = matches.index.tolist()
-    matches = games_df.set_index('Title').loc[matches]
-    matches.reset_index(inplace=True)
 
     # Results
     cols = ['Genre', 'Developer', 'Publisher', 'North America', 'Rest of countries']
