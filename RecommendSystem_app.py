@@ -31,12 +31,10 @@ if selected_genre != 'All':
 else:
     filtered_games = games_df
 selected_game = ph.selectbox(
-    'Select one among the 787 games from the menu: (you can type it as well)',
-    [''] + games_df.apply(lambda x: f"{x['Title']} ({x['Genre']})", axis=1).to_list(), 
+    'Select a game from the filtered list: (you can type it as well)',
+    [''] + filtered_games['Title'].to_list(),
     key='default',
     format_func=lambda x: 'Select a game' if x == '' else x
-)
-
 # Recommendations
 if selected_game:
 
