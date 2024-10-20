@@ -20,11 +20,21 @@ st.sidebar.markdown('<strong><span style="color: #8B2500;font-size: 26px;"> Game
 st.sidebar.markdown('An app by [Long Do](https://doophilong.github.io/Portfolio/)')
 st.sidebar.image('pexels-pixabay-275033.jpg', use_column_width=True)
 st.sidebar.markdown('<strong><span style="color: #EE4000;font-size: 26px;">:slot_machine: Choose your game !!!</span></strong>',unsafe_allow_html=True)
-ph = st.sidebar.empty()
-selected_game = ph.selectbox('Select one among the 787 games '
-                             'from the menu: (you can type it as well)',
-                             [''] + games_df['Title'].to_list(), key='default',
-                             format_func=lambda x: 'Select a game' if x == '' else x)
+genres = games_df['Genre'].unique().tolist()
+selected_genre = st.sidebar.selectbox('Filter by Genre', ['All'] + genres)
+
+# Apply filter if selected
+if selected_genre != 'All':
+    filtered_games = games_df[games_df['Genre'] == selected_genre]
+else:
+    filtered_games = games_df
+
+selected_game = ph.selectbox(
+    'Select a game from the filtered list: (you can type it as well)',
+    [''] + filtered_games['Title'].to_list(),
+    key='default',
+    format_func=lambda x: 'Select a game' if x == '' else x
+)
 
 # Recommendations
 if selected_game:
