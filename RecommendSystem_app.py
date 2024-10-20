@@ -21,37 +21,21 @@ st.sidebar.markdown('An app by [Long Do](https://doophilong.github.io/Portfolio/
 st.sidebar.image('pexels-pixabay-275033.jpg', use_column_width=True)
 st.sidebar.markdown('<strong><span style="color: #EE4000;font-size: 26px;">:slot_machine: Choose your game !!!</span></strong>',unsafe_allow_html=True)
 ph = st.sidebar.empty()
-genres = games_df['Genre'].unique().tolist()
-selected_genre = st.sidebar.selectbox('Filter by Genre', ['All'] + genres)
+selected_game = ph.selectbox('Select one among the 787 games '
+                             'from the menu: (you can type it as well)',
+                             [''] + games_df['Title'].to_list(), key='default',
+                             format_func=lambda x: 'Select a game' if x == '' else x)
 
-genres = games_df['Genre'].unique().tolist()
-selected_genres = st.sidebar.multiselect('Filter by Genre(s)', genres)
+# Recommendations
+if selected_game:
 
-# Sidebar: Add slider or selectbox for release year range
-min_year = int(games_df['Release Year'].min())
-max_year = int(games_df['Release Year'].max())
-selected_year_range = st.sidebar.slider(
-    'Filter by Release Year',
-    min_value=min_year, max_value=max_year,
-    value=(min_year, max_year)
-)
+    link = 'https://en.wikipedia.org' + games_df[games_df.Title == selected_game].Link.values[0]
 
-genres = games_df['Genre'].unique().tolist()
-selected_genre = st.sidebar.selectbox('Filter by Genre', ['All'] + genres)
-
-# Apply filter if selected
-if selected_genre != 'All':
-    filtered_games = games_df[games_df['Genre'] == selected_genre]
-else:
-    filtered_games = games_df
-
-selected_game = ph.selectbox(
-    'Select a game from the filtered list: (you can type it as well)',
-    [''] + filtered_games['Title'].to_list(),
-    key='default',
-    format_func=lambda x: 'Select a game' if x == '' else x
-)
-
+    # DF query
+    matches = similarity_df[selected_game].sort_values()[1:6]
+    matches = matches.index.tolist()
+    matches = games_df.set_index('Title').loc[matches]
+    matches.reset_index(inplace=True)
 
     # Results
     cols = ['Genre', 'Developer', 'Publisher', 'North America', 'Rest of countries']
